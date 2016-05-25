@@ -1,0 +1,15 @@
+import java.io.*;
+Class FileIO{
+  public static void main(String[] args){
+    try{
+      File myfile=new File("D://a.txt");
+      FileInputStream fis=new FileInputStream(myfile);
+      while((int i=fis.readNext())!=-1){
+        System.out.print(i);
+      }
+      fis.close;
+    catch(IOException e){
+      System.out.println(e);
+    }
+  }
+}
