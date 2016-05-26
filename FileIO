@@ -4,7 +4,8 @@ Class FileIO{
     try{
       File myfile=new File("D://a.txt");
       FileInputStream fis=new FileInputStream(myfile);
-      while((int i=fis.readNext())!=-1){
+      int i;
+      while((i=fis.readNext())!=-1){
         System.out.print(i);
       }
       fis.close;
