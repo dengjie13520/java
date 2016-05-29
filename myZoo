@@ -1,0 +1,122 @@
+Animal.java
+package myzoo;
+import java.io.*;
+/**
+ * 
+ * name:Animal
+ * Function:abstract class
+ * create date:2016/5/21
+ * alter date and author:none
+ * @author Dengjie
+ *
+ */
+public abstract class Animal implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	String name;
+	int age;
+	String skin;
+	abstract void eat();
+}
+Tiger.java
+package myzoo;
+/**
+ * 
+ * name:Tiger
+ * fuction:serializable object
+ * create date:2015/5/21
+ * alter date and author:none
+ * @author dengjie
+ *
+ */
+public class Tiger extends Animal {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public String getSkin() {
+		return skin;
+	}
+	public void setSkin(String skin) {
+		this.skin = skin;
+	}
+	private String  name;
+	private int  age;
+	private String skin;
+	void eat() {
+		System.out.println("I can eat a sheep");
+	}
+}
+BigZoo.java
+package myzoo;
+import java.io.*;
+import java.util.ArrayList;
+/**
+ * 
+ * name:BigZoo
+ * fuction:implements serializable and thread
+ * create date:2016/5/21
+ * alter date and author:none
+ * @author dengjie
+ *
+ */
+public class BigZoo extends Thread {
+
+	/**
+	 * @param args
+	 */
+	@SuppressWarnings("unchecked")
+	public void run(){
+		File serialRestore=new File("F://TEST/serial.txt");
+		try {
+			FileOutputStream fop=new FileOutputStream(serialRestore);
+			ObjectOutputStream oos=new ObjectOutputStream(fop);
+			oos.writeObject(myAList);
+			oos.flush();
+			oos.close();
+			System.out.println("序列化的对象是："+myAList.get(0).getName()+","+myAList.get(0).getAge()+","+myAList.get(0).getSkin());
+			File getMyO=new File("F://TEST/serial.txt");
+			FileInputStream fis=new FileInputStream(getMyO);
+			ObjectInputStream ois=new ObjectInputStream(fis);
+			
+			ArrayList<Tiger> xx=(ArrayList<Tiger>)ois.readObject();
+			System.out.println("反序列化得到的对象是："+xx.get(0).getName()+","+xx.get(0).getAge()+","+xx.get(0).getSkin());
+			
+		} catch (IOException e) {
+			System.out.println(e);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	static ArrayList<Tiger> myAList=new ArrayList<Tiger>();
+	public static void main(String[] args) {
+		Tiger huniu =new Tiger();
+		huniu.setName("虎妞");
+		huniu.setAge(30);
+		huniu.setSkin("老虎纹");
+		BigZoo bz=new BigZoo();
+		myAList.add(huniu);
+		bz.start();
+
+	}
+
+}
+
